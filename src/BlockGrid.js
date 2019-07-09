@@ -43,6 +43,11 @@ class BlockGrid {
         }
     }
 
+    /**
+     * Cleans out root element and re-renders the grid
+     *
+     * @param {HTMLElement} el root element
+     */
     reRender(el = document.getElementById('gridEl')) {
         while (el.hasChildNodes()) {
             el.removeChild(el.lastChild);

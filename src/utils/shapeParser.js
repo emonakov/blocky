@@ -1,3 +1,11 @@
+/**
+ * Parses a list of blocks in the array and searching for a proper
+ * shape of connected block elements
+ *
+ * @param {Object[]} shape A shape contains coords of connected blocks of same colour
+ * @param {Array} grid A grid array
+ * @param {Block} block A first block to find shape from
+ */
 export default ({ shape, grid, block: { x, y, colour } }) => {
     const visited = [];
 
