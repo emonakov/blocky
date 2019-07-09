@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development --open",
-    "test": "jest",
+    "test": "jest --colors --runInBand --coverage",
+    "test:watch": "jest --watchAll --verbose --colors --runInBand",
     "format": "prettier --write 'app/**/*.{css,js}'"
   },
   "devDependencies": {

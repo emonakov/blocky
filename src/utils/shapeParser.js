@@ -18,19 +18,19 @@ export default ({ shape, grid, block: { x, y, colour } }) => {
 
     const parseShape = ({ x, y }) => {
         const sides = {
-            west: false,
-            north: false,
-            east: false,
-            south: false,
+            left: false,
+            above: false,
+            right: false,
+            under: false,
         }
 
         shape.push({ x, y });
         visited.push(`${x}:${y}`);
 
-        sides.west = checkAccessibility(x - 1, y);
-        sides.north = checkAccessibility(x, y + 1);
-        sides.east = checkAccessibility(x + 1, y);
-        sides.south = checkAccessibility(x, y - 1);
+        sides.left = checkAccessibility(x - 1, y);
+        sides.above = checkAccessibility(x, y + 1);
+        sides.right = checkAccessibility(x + 1, y);
+        sides.under = checkAccessibility(x, y - 1);
 
         Object
             .keys(sides)
