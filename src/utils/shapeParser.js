@@ -22,7 +22,7 @@ export default ({ shape, grid, block: { x, y, colour } }) => {
             above: false,
             right: false,
             under: false,
-        }
+        };
 
         shape.push({ x, y });
         visited.push(`${x}:${y}`);
@@ -32,11 +32,10 @@ export default ({ shape, grid, block: { x, y, colour } }) => {
         sides.right = checkAccessibility(x + 1, y);
         sides.under = checkAccessibility(x, y - 1);
 
-        Object
-            .keys(sides)
+        Object.keys(sides)
             .filter(side => Boolean(sides[side]))
             .forEach(side => parseShape(sides[side]));
     };
 
     parseShape({ x, y });
-}
+};

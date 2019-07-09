@@ -4,65 +4,64 @@ import shapeParser from './utils/shapeParser';
 import moveBlocks from './utils/blockMover';
 
 class BlockGrid {
-  constructor(width = 10, height = 10) {
-    this.width = width;
-    this.height = height;
-    this.grid = [];
+    constructor(width = 10, height = 10) {
+        this.width = width;
+        this.height = height;
+        this.grid = [];
 
-    for (let x = 0; x < this.width; x++) {
-      const col = [];
-      for (let y = 0; y < this.height; y++) {
-        col.push(new Block(x, y));
-      }
+        for (let x = 0; x < this.width; x++) {
+            const col = [];
+            for (let y = 0; y < this.height; y++) {
+                col.push(new Block(x, y));
+            }
 
-      this.grid.push(col);
+            this.grid.push(col);
+        }
     }
-  }
 
-  render(el = document.getElementById('gridEl')) {
-    for (let x = 0; x < this.width; x++) {
-      const id = 'col_' + x;
-      const colEl = document.createElement('div');
-      colEl.id = id;
-      colEl.className = 'col';
-      el.appendChild(colEl);
+    render(el = document.getElementById('gridEl')) {
+        for (let x = 0; x < this.width; x++) {
+            const id = 'col_' + x;
+            const colEl = document.createElement('div');
+            colEl.id = id;
+            colEl.className = 'col';
+            el.appendChild(colEl);
 
-      for (let y = this.height - 1; y >= 0; y--) {
-        const block = this.grid[x][y];
-        const id = `block_${x}x${y}`;
-        const blockEl = document.createElement('div');
+            for (let y = this.height - 1; y >= 0; y--) {
+                const block = this.grid[x][y];
+                const id = `block_${x}x${y}`;
+                const blockEl = document.createElement('div');
 
-        blockEl.id = id;
-        blockEl.className = 'block';
-        blockEl.style.background = block.colour;
-        blockEl.addEventListener('click', () => this.blockClicked(block));
-        colEl.appendChild(blockEl);
-      }
+                blockEl.id = id;
+                blockEl.className = 'block';
+                blockEl.style.background = block.colour;
+                blockEl.addEventListener('click', () =>
+                    this.blockClicked(block)
+                );
+                colEl.appendChild(blockEl);
+            }
+        }
     }
-  }
 
-  reRender(el = document.getElementById('gridEl')) {
-    while (el.hasChildNodes()) {
-      el.removeChild(el.lastChild);
+    reRender(el = document.getElementById('gridEl')) {
+        while (el.hasChildNodes()) {
+            el.removeChild(el.lastChild);
+        }
+        this.render(el);
     }
-    this.render(el);
-  }
 
-  blockClicked(block) {
-    const shape = [];
+    blockClicked(block) {
+        const shape = [];
+        shapeParser({
+            shape,
+            grid: this.grid,
+            block,
+        });
 
-    COLOURS.includes(block.colour) && shapeParser({
-      shape,
-      grid: this.grid,
-      block,
-    });
-
-    if (shape.length) {
-      shape.forEach(({ x, y }) => this.grid[x][y]['colour'] = EMPTY_COLOUR);
-      moveBlocks(this.grid, EMPTY_COLOUR);
-      this.reRender();
+        shape.forEach(({ x, y }) => (this.grid[x][y]['colour'] = EMPTY_COLOUR));
+        moveBlocks(this.grid, EMPTY_COLOUR);
+        this.reRender();
     }
-  }
 }
 
 export default BlockGrid;
